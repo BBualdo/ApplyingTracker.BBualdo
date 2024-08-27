@@ -1,26 +1,35 @@
-﻿using Data.Models;
+﻿using Data;
+using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services;
 
-public class ApplicationsService : IApplicationsService
+public class ApplicationsService(AppDbContext dbContext) : IApplicationsService
 {
-    public Task<IEnumerable<Application>> GetApplications(int page)
+    private readonly AppDbContext _dbContext = dbContext;
+    
+    public async Task<IEnumerable<Application>> GetApplications(int page)
     {
-        throw new NotImplementedException();
+        const int pageSize = 10;
+
+        return await _dbContext.Applications.Skip(pageSize * (page - 1)).Take(pageSize).ToListAsync();
     }
 
-    public Task AddApplication(Application application)
+    public async Task AddApplication(Application application)
     {
-        throw new NotImplementedException();
+        await _dbContext.Applications.AddAsync(application);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Task UpdateApplication(Application application)
+    public async Task UpdateApplication(Application application)
     {
-        throw new NotImplementedException();
+        _dbContext.Entry(application).State = EntityState.Modified;
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Task DeleteApplication(Application application)
+    public async Task DeleteApplication(Application application)
     {
-        throw new NotImplementedException();
+        _dbContext.Remove(application);
+        await _dbContext.SaveChangesAsync();
     }
 }

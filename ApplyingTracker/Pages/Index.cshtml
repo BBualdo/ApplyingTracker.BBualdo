@@ -1,10 +1,33 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Applications";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Applications</h1>
+    <div>
+        @if (!Model.Applications.Any())
+        {
+            <p>You haven't applied to any jobs yet.</p>
+        }
+        @foreach (var app in Model.Applications)
+        {
+            <table class="table table-striped-columns">
+                <thead>
+                <th>@Html.DisplayNameFor(model => app.CompanyName)</th>
+                <th>@nameof(app.Date)</th>
+                <th>@Html.DisplayNameFor(model => app.IsCoverLetterIncluded)</th>
+                <th>@nameof(app.Status)</th>
+                <th></th>
+                </thead>
+                <tbody>
+                <td>@app.CompanyName</td>
+                <td>@app.Date</td>
+                <td>@app.IsCoverLetterIncluded</td>
+                <td>@app.Status</td>
+                </tbody>
+            </table>
+        }
+    </div>
 </div>
