@@ -8,11 +8,9 @@ public class ApplicationsService(AppDbContext dbContext) : IApplicationsService
 {
     private readonly AppDbContext _dbContext = dbContext;
     
-    public async Task<IEnumerable<Application>> GetApplications(int page)
+    public async Task<IEnumerable<Application>> GetApplications()
     {
-        const int pageSize = 10;
-
-        return await _dbContext.Applications.Skip(pageSize * (page - 1)).Take(pageSize).ToListAsync();
+        return await _dbContext.Applications.OrderByDescending(a => a.Date).ToListAsync();
     }
 
     public async Task<Application?> GetApplicationById(int id)
