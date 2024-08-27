@@ -8,16 +8,11 @@ namespace ApplyingTracker.Pages;
 public class CreateModel : PageModel
 {
     private readonly IApplicationsService _applicationsService;
-    [BindProperty] public Application Application { get; set; } = new();
+    [BindProperty] public Application Application { get; set; }
 
     public CreateModel(IApplicationsService applicationsService)
     {
         _applicationsService = applicationsService;
-    }
-    
-    public void OnGet()
-    {
-        
     }
 
     public async Task<IActionResult> OnPostAsync()

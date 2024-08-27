@@ -15,6 +15,11 @@ public class ApplicationsService(AppDbContext dbContext) : IApplicationsService
         return await _dbContext.Applications.Skip(pageSize * (page - 1)).Take(pageSize).ToListAsync();
     }
 
+    public async Task<Application?> GetApplicationById(int id)
+    {
+        return await _dbContext.Applications.FindAsync(id);
+    }
+
     public async Task AddApplication(Application application)
     {
         await _dbContext.Applications.AddAsync(application);

@@ -33,7 +33,7 @@
                         <td>@app.Status</td>
                         <td class="text-end">
                             <button class="btn btn-outline-dark btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <a type="button" class="btn btn-danger btn-sm" asp-page="/Delete" asp-route-id="@app.Id">Delete</a>
                         </td>
                     </tr>
                 }
